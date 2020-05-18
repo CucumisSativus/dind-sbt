@@ -16,3 +16,6 @@ docker run --rm -v/path/to/project:/code -eDOCKER_HOST=tcp://docker.for.win.loca
 ```
 
 or mount the volume `docker run --rm -v/path/to/project:/code -v /var/run/docker.sock:/var/run/docker.sock dind-sbt sbt docker`
+
+# Based on 
+https://github.com/DieBauer/dind-sbt
