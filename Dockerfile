@@ -1,6 +1,6 @@
 FROM docker:19.03.8
 
-ENV SBT_VERSION 1.3.12
+ENV SBT_VERSION 1.3.13
 ENV JDK_VERSION openjdk11
 
 RUN apk add --update --no-cache $JDK_VERSION bash curl && \
