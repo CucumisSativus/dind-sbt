@@ -1,0 +1,21 @@
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        jdk: [openjdk8, openjdk11, openjdk14]
+        sbt: [1.3.13]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: Get tag
+        id: vars  
+        run: echo ::set-output name=tag::$(echo ${{matrix.sbt}}-${{matrix.jdk}}) 
+      - name: Build image
+        run: docker build . --build-arg SBT_VERSION=${{matrix.sbt}} --build-arg JDK_VERSION=${{matrix.jdk}} --tag cucumissativus/dind-sbt:${{steps.vars.outputs.tag}}
+      - name: Push 
+        run: docker push cucumissativus/dind-sbt:${{steps.vars.outputs.tag}}
